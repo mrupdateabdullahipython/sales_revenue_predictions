@@ -25,7 +25,7 @@ def set_bg_local(image_file):
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Call with your local file path
-set_bg_local('sales_chart.jpg')
+set_bg_local('background.jpg')
 # app.py
 # 🚀 Sales Revenue AI - CEO Level Premium Version
 # ---------------- PAGE CONFIG ----------------
