@@ -314,7 +314,7 @@ st.caption(
     "Built with Python • Streamlit • Machine Learning • CEO Dashboard"
 )
 st.caption("Chart Demostrates how Sales Increases")
-st.image('increase_sales.jpg.')
+st.image('sale.png')
 st.caption('Sales Revenue Descriptions')
 st.markdown('Sales revenue is the total income a business generates from selling goods or services. Found at the very top of an income statement—earning it the nickname "the top line"—it is calculated by multiplying the number of units sold by their sales price:')
 st.image('sales_revenue_product.jpg',width=500)
