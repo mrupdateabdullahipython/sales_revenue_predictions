@@ -38,7 +38,7 @@ def set_bg_local(image_file):
         st.sidebar.warning("⚠️ 'background.png' not found locally.")
 
 # Call the background injector immediately after the page config setup
-set_bg_local('background.png')
+st.set_bg_local('background.png')
 
 
 # 3. ---------------- SAFE FILE CHECK ----------------
