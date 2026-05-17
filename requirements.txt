@@ -1,7 +1,6 @@
 streamlit
-base64
 pandas
-joblib
+numpy
+scikit-learn
 matplotlib
-time
-os 
+joblib
