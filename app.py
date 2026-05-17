@@ -6,14 +6,15 @@ import matplotlib.pyplot as plt
 import time
 import os
 
-# ---------------- PAGE CONFIG (MUST BE FIRST) ----------------
+# 1. ---------------- PAGE CONFIG (MUST BE FIRST) ----------------
+# Streamlit requires this to be the absolute first Streamlit command called.
 st.set_page_config(
     page_title="Sales Revenue AI",
     page_icon="📈",
     layout="wide"
 )
 
-# ---------------- BACKGROUND FUNCTIONS ----------------
+# 2. ---------------- BACKGROUND CONFIGURATION ----------------
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
@@ -32,11 +33,15 @@ def set_bg_local(image_file):
         </style>
         '''
         st.markdown(page_bg_img, unsafe_allow_html=True)
+    else:
+        # Graceful fallback so the app doesn't crash if the image is missing locally
+        st.sidebar.warning("⚠️ 'background.png' not found locally.")
 
-# Call with your local file path
+# Call the background injector immediately after the page config setup
 set_bg_local('background.png')
 
-# ---------------- SAFE FILE CHECK ----------------
+
+# 3. ---------------- SAFE FILE CHECK ----------------
 if not os.path.exists("sales_model.pkl"):
     st.error("sales_model.pkl not found")
     st.stop()
@@ -48,6 +53,7 @@ if not os.path.exists("training_columns.pkl"):
 # ---------------- LOAD MODEL ----------------
 model = joblib.load("sales_model.pkl")
 training_columns = joblib.load("training_columns.pkl")
+
 
 # ---------------- HEADER ----------------
 st.markdown("""
@@ -153,27 +159,6 @@ if st.button("🚀 Predict Revenue"):
             columns=training_columns,
             fill_value=0
         )
-        import streamlit as st
-import base64
-
-def get_base64(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64(png_file)
-    page_bg_img = f'''
-    <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{bin_str}");
-        background-size: cover;
-    }}
-    </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-set_background('background.png')
 
         # ---------------- PREDICT ----------------
         prediction = model.predict(new_data)[0]
@@ -193,7 +178,6 @@ set_background('background.png')
             )
             time.sleep(0.02)
         
-        # Ensure the final accurate prediction displays at the end of the loop
         counter.empty()
 
         # ---------------- RESULT CARD ----------------
@@ -231,7 +215,7 @@ set_background('background.png')
         ax.set_title("Business Revenue Growth")
         ax.set_ylabel("Revenue (₦)")
         st.pyplot(fig)
-        plt.close(fig)  # Prevents memory leaks
+        plt.close(fig)
 
         # ---------------- PIE CHART ----------------
         st.subheader("🥧 Revenue Allocation Insight")
@@ -247,7 +231,7 @@ set_background('background.png')
         )
         ax2.axis("equal")
         st.pyplot(fig2)
-        plt.close(fig2)  # Prevents memory leaks
+        plt.close(fig2)
 
     except Exception as e:
         st.error(f"Prediction Error: {e}")
