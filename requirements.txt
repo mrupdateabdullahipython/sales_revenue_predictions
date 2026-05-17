@@ -1,9 +1,7 @@
 streamlit
+base64
 pandas
-numpy
-scikit-learn
 joblib
 matplotlib
 time
 os 
-base64
